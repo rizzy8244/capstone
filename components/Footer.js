@@ -7,8 +7,8 @@ export default () => html`
       <li>About</li>
       <li>Blogs</li>
       <li>Help</li>
-      <li>Privacy</li><br>
+      <li>Privacy</li>
       <li>English</li>
-</ul>
+    </ul>
   </footer>
 `;

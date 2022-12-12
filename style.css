@@ -2,12 +2,15 @@ body {
   background-color:#9DB5B2
 }
 
+
 nav ul {
   display: flex;
   flex-direction: row;
-  border: 3px solid gray;
+  border: 2px solid gray;
   margin: 9px;
   background-color: #EEF0F2 ;
+  border-radius: 10px;
+  padding-right: 40px;
 }
 
 nav a:hover {
@@ -30,10 +33,9 @@ font-size: 1.5em;
 }
 
 .profilePic {
-  margin-top: 100px;
   height: 200px;
   width: 200px;
-  justify-self: center;
+
 }
 
 #landingpage {
@@ -62,7 +64,7 @@ justify-self: center;
   grid-template-rows: 675px;
 }
 
-form {
+#loginForm {
   grid-column: 2;
   grid-row: 1;
   justify-self: center;
@@ -77,7 +79,7 @@ form {
 }
 
 footer{
-  position: fixed ;
+  position: fixed;
   width: 100%;
   background-color: #EEF0F2;
   margin: 0px;
@@ -88,10 +90,12 @@ footer{
 }
 
 footer ul {
+position: relative;
+bottom:20px;
 display: flex;
 flex-direction: row;
 list-style: none;
-padding-bottom: 25px;
+
 }
 
 footer li {
@@ -111,4 +115,90 @@ footer li {
 #iconList {
   align-self: flex-end;
 
+}
+
+.searchClass {
+  align-self: center;
+  margin-left: auto;
+
+
+
+}
+
+.engage {
+  align-self: center;
+}
+
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 250px;
+  max-height: 472px;
+  text-align: center;
+  background-color: #EEF0F2;
+  border-radius: 10px;
+  align-self: center;
+  justify-self: center;
+}
+
+.title {
+  color: grey;
+  font-size: 18px;
+}
+
+#pCardButton {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+  border-radius: 0 0 10px 10px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+button:hover, a:hover {
+  opacity: 0.7;
+}
+
+#tab {
+  border-style: solid;
+
+}
+
+table, tr, th, td {
+  width: 50%;
+border-style: solid;
+justify-content: center;
+}
+
+#container {
+display:flex;
+flex-direction: column;
+border-style: solid;
+height: 200px;
+width: 400px;
+border-radius: 10px;
+border-width: .25px;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+background-color: white;
+}
+
+#tab {
+  align-self: center ;
+  justify-self: center;
+}
+
+#getTempHead {
+  align-self: center ;
+  justify-self: center;
 }
