@@ -1,4 +1,5 @@
 export default {
   view: "Events",
-  weather: {}
+  weather: {},
+  city: ""
 };
