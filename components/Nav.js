@@ -14,7 +14,7 @@ export default links => html`
         .join("")}
       <div class="searchClass">
         <form action="#">
-          <input type="search" class="search" required placeholder="Search" />
+          <input type="search" class="search" required placeholder="Search"/>
           <button type="submit" class="fa-solid fa-magnifying-glass"></button></button>
         </form>
       </div>

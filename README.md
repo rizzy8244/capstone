@@ -27,3 +27,6 @@ Now, enter `code .` to open this project in VS Code, and look for a prompt to 'i
 In your repo, feel free to update this README and make any other initial changes to files, etc. Then go ahead and do your usual `git` steps -- add, commit, and push.
 
 **Note:** This is a template repository, no need to 'fork it.
+
+ <img alt="icon" src={http://openweathermap.org/img/w/${state.weather.icon}.png}
+      width="120" height="100" />

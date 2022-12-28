@@ -1,3 +1,4 @@
 export default {
-  view: "Home"
+  view: "Home",
+  weather: {}
 };

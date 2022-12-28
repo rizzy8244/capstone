@@ -173,12 +173,14 @@ button:hover, a:hover {
 #tab {
   border-style: solid;
 
+
 }
 
 table, tr, th, td {
   width: 50%;
 border-style: solid;
 justify-content: center;
+
 }
 
 #container {
@@ -200,5 +202,33 @@ background-color: white;
 
 #getTempHead {
   align-self: center ;
+  justify-self: center;
+}
+
+#eventsContainer {
+  display: grid;
+  grid-template-columns: 300px 560px 798px;
+  grid-template-rows: 704px;
+}
+
+/* #container {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 250px;
+  max-height: 472px;
+  text-align: center;
+  background-color: #EEF0F2;
+  border-radius: 10px;
+  align-self: center;
+  justify-self: center;
+} */
+
+#weatherCard {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  width: 250px;
+  height: 472px;
+  text-align: center;
+  background-color: #EEF0F2;
+  border-radius: 10px;
+  align-self: center;
   justify-self: center;
 }
