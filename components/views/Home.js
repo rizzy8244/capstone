@@ -17,5 +17,11 @@ export default state => html`
       <a href="#"><i class="fa fa-facebook"></i></a>
       <p><button id="pCardButton">Message</button></p>
     </div>
+    <div id="weatherCard">
+      <h1 id="openTemp">Temperature</h1>
+      <img alt="icon"
+      src={http://openweathermap.org/img/w/${state.weather.icon}.png}
+      width="120" height="100" />
+    </div>
   </main>
 `;
