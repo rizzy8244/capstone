@@ -5,7 +5,7 @@ import Navigo from "navigo";
 import { capitalize } from "lodash";
 import axios from "axios";
 import dotenv from "dotenv";
-import serpApi from "google-search-results-nodejs";
+// import serpApi from "google-search-results-nodejs";
 
 dotenv.config();
 
@@ -94,10 +94,15 @@ router.hooks({
                 console.log(weatherInfo);
                 console.log(weatherInfo.main.temp);
                 console.log(weatherInfo.weather[0].icon);
+                console.log(weatherInfo.name);
+                store.Home.weather.temperature = weatherInfo.main.temp;
+                store.Home.weather.name = weatherInfo.name;
                 store.Home.weather.icon = weatherInfo.weather[0].icon;
                 // console.log(weatherInfo.sys.country);
-                document.querySelector("#openTemp").innerText =
+                document.querySelector("#openTemp").innerHTML =
                   weatherInfo.main.temp;
+                document.querySelector("#locationName").innerHTML =
+                  weatherInfo.name;
 
                 done();
               })
@@ -118,7 +123,7 @@ router.hooks({
           .get("http://localhost:4040/serpApi")
           .then(function(response) {
             // handle success
-            console.log(response.data);
+            // console.log(response.data);
             let localEventInfo = {};
             localEventInfo = response.data;
             console.log(localEventInfo);

@@ -18,9 +18,10 @@ export default state => html`
       <p><button id="pCardButton">Message</button></p>
     </div>
     <div id="weatherCard">
-      <h1 id="openTemp">Temperature</h1>
+      <h1 id="locationName">${state.weather.name}</h1>
+      <h1 id="openTemp">${state.weather.temperature}</h1>
       <img alt="icon"
-      src={http://openweathermap.org/img/w/${state.weather.icon}.png}
+      src={https://openweathermap.org/img/wn/${state.weather.icon}@2x.png}
       width="120" height="100" />
     </div>
   </main>
