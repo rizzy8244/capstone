@@ -35,6 +35,7 @@ font-size: 1.5em;
 .profilePic {
   height: 200px;
   width: 200px;
+  padding-top: 10px;
 
 }
 
@@ -211,16 +212,23 @@ background-color: white;
   grid-template-rows: 704px;
 }
 
-/* #container {
+#events {
+  display: grid;
+  grid-template-columns: 300px 560px 798px;
+  grid-template-rows: 704px;
+}
+
+#googleEvents {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 250px;
-  max-height: 472px;
+  width: 472px;
+  height: 600px;
   text-align: center;
   background-color: #EEF0F2;
   border-radius: 10px;
   align-self: center;
   justify-self: center;
-} */
+  grid-column: 2/3;
+}
 
 #weatherCard {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);

@@ -3,6 +3,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const SerpApi = require("google-search-results-nodejs");
+
 // const serpAPI = require("./routers/SerpApi");
 
 dotenv.config();
