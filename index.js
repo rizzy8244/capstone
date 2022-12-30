@@ -82,10 +82,9 @@ router.hooks({
           navigator.geolocation.getCurrentPosition(position => {
             latitude = position.coords.latitude;
             longitude = position.coords.longitude;
-
             axios
               .get(
-                `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${process.env.OPEN_WEATHER_MAP_API_KEY}&units=imperial`
+                `http://localhost:4040/api/weather?latitude=${latitude}&longitude=${longitude}`
               )
               .then(function(response) {
                 // handle success
@@ -99,45 +98,50 @@ router.hooks({
                 store.Home.weather.name = weatherInfo.name;
                 store.Home.weather.icon = weatherInfo.weather[0].icon;
                 // console.log(weatherInfo.sys.country);
-                document.querySelector("#openTemp").innerHTML =
-                  weatherInfo.main.temp;
-                document.querySelector("#locationName").innerHTML =
-                  weatherInfo.name;
-
-                done();
+                // document.querySelector("#openTemp").innerHTML =
+                //   weatherInfo.main.temp;
+                // document.querySelector("#locationName").innerHTML =
+                //   weatherInfo.name;
               })
               .catch(function(error) {
                 // handle error
                 console.log(error);
-                done();
               })
               .finally(function() {
                 // always executed
+                done();
               });
           });
         }
         getWeather();
         break;
       case "Events":
-        axios
-          .get("http://localhost:4040/serpApi")
-          .then(function(response) {
-            // handle success
-            // console.log(response.data);
-            let localEventInfo = {};
-            localEventInfo = response.data;
-            console.log(localEventInfo);
-            done();
-          })
-          .catch(function(error) {
-            // handle error
-            console.log(error);
-            done();
-          })
-          .finally(function() {
-            // always executed
-          });
+        navigator.geolocation.getCurrentPosition(position => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
 
+          axios
+            .get(
+              `http://localhost:4040/api/events?latitude=${latitude}&longitude=${longitude}`
+            )
+            .then(function(response) {
+              // handle success
+              // console.log(response.data);
+
+              store.Events.localEventInfo = response.data;
+              console.log(response.data[0].date);
+
+              done();
+            })
+            .catch(function(error) {
+              // handle error
+              console.log(error);
+              done();
+            })
+            .finally(function() {
+              // always executed
+            });
+        });
         break;
       default:
     }
