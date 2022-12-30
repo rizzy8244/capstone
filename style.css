@@ -214,21 +214,35 @@ background-color: white;
 
 #events {
   display: grid;
-  grid-template-columns: 300px 560px 798px;
+  grid-template-columns: 300px 1358px;
   grid-template-rows: 704px;
+
 }
 
 #googleEvents {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  width: 472px;
-  height: 600px;
+  /* width: 472px;
+  height: 600px; */
   text-align: center;
   background-color: #EEF0F2;
   border-radius: 10px;
   align-self: center;
   justify-self: center;
   grid-column: 2/3;
+  overflow-y: auto;
+  max-height: 100%;
 }
+
+#googleEvents table {
+width: 100%;
+
+}
+
+#googleEvents table tr td:first-of-type,#googleEvents table tr th:first-of-type {
+width:90px;
+
+}
+
 
 #weatherCard {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -240,3 +254,4 @@ background-color: white;
   align-self: center;
   justify-self: center;
 }
+

@@ -21,7 +21,7 @@ export default state => html`
       <h1 id="locationName">${state.weather.name}</h1>
       <h1 id="openTemp">${state.weather.temperature}</h1>
       <img alt="icon"
-      src={https://openweathermap.org/img/wn/${state.weather.icon}@2x.png}
+      src=https://openweathermap.org/img/wn/${state.weather.icon}@2x.png
       width="120" height="100" />
     </div>
   </main>
