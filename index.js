@@ -23,10 +23,32 @@ function render(state = store.Home) {
 }
 
 function afterRender(state) {
-  // document.querySelector(".fa-bars").addEventListener("click", () => {
-  //   document.querySelector("nav > ul").classList.toggle("hidden--mobile");
-  // });
-
+  document.querySelector(".fa-bars").addEventListener("click", () => {
+    document.querySelector("nav > ul").classList.toggle("hidden--mobile");
+  });
+  if (state.view === "Home") {
+    const image = document.querySelector("#carousel-image");
+    document.querySelector("#carousel-next").addEventListener("click", () => {
+      const index = +image.dataset.index;
+      let nextIndex = index + 1;
+      if (index === state.imageInfo.length - 1) {
+        nextIndex = 0;
+      }
+      image.dataset.index = nextIndex;
+      image.src = `http://localhost:4040/carousel/${state.imageInfo[nextIndex].filename}`;
+    });
+    document
+      .querySelector("#carousel-previous")
+      .addEventListener("click", () => {
+        const index = +image.dataset.index;
+        let nextIndex = index - 1;
+        if (index === 0) {
+          nextIndex = state.imageInfo.length - 1;
+        }
+        image.dataset.index = nextIndex;
+        image.src = `http://localhost:4040/carousel/${state.imageInfo[nextIndex].filename}`;
+      });
+  }
   if (state.view === "Events") {
     document.querySelectorAll(".favoriteButton").forEach(favoriteButton => {
       favoriteButton.addEventListener("click", () => {
@@ -51,7 +73,14 @@ function afterRender(state) {
     document.querySelector("#photoForm").addEventListener("submit", e => {
       e.preventDefault();
       const formData = new FormData(e.target);
-      axios.post("http://localhost:4040/api/carousel", formData);
+      axios
+        .post("http://localhost:4040/api/carousel", formData)
+        .then(() => {
+          alert("photo uploaded successfully");
+        })
+        .catch(() => {
+          alert("error uploading photo");
+        });
     });
   }
 }

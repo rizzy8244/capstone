@@ -282,18 +282,15 @@ width:90px;
   }
 }
 
-  nav > .fa-bars {
-    display: none;
-  }
+
 
 .carousel > img {
   display: block;
-width: 500px;
-height:500px;
-position:relative;
 
+position:relative;
   }
 
   img{
+
     max-width: 100%;
   }

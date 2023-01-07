@@ -27,7 +27,11 @@ export default state => html`
     <div class="carousel">
       <img
         src="http://localhost:4040/carousel/${state.imageInfo[0].filename}"
+        data-index="0"
+        id="carousel-image"
       />
+      <button id="carousel-previous">&lt;</button>
+      <button id="carousel-next">&gt;</button>
     </div>
   </main>
 `;
