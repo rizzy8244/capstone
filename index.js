@@ -18,8 +18,42 @@ function render(state = store.Home) {
   ${Main(state)}
   ${Footer()}
   `;
-  // afterRender(state);
+  afterRender(state);
   router.updatePageLinks();
+}
+
+function afterRender(state) {
+  document.querySelector(".fa-bars").addEventListener("click", () => {
+    document.querySelector("nav > ul").classList.toggle("hidden--mobile");
+  });
+
+  if (state.view === "Events") {
+    document.querySelectorAll(".favoriteButton").forEach(favoriteButton => {
+      favoriteButton.addEventListener("click", () => {
+        axios
+          .post("http://localhost:4040/api/favorite", {
+            ...favoriteButton.dataset
+          })
+          .then(function(response) {
+            alert("Event Successfully Added ");
+          })
+          .catch(function(error) {
+            // handle error
+            console.log(error);
+          })
+          .finally(function() {
+            // always executed
+          });
+      });
+    });
+  }
+  if (state.view === "Photos") {
+    document.querySelector("#photoForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      axios.post("http://localhost:4040/api/carousel", formData);
+    });
+  }
 }
 //Event Function
 // function afterRender(state) {
@@ -129,6 +163,7 @@ router.hooks({
               // console.log(response.data);
 
               store.Events.localEventInfo = response.data;
+              console.log("API DATA", response.data);
               console.log(response.data[0].date);
 
               done();
@@ -143,7 +178,31 @@ router.hooks({
             });
         });
         break;
+      case "Tasks":
+        console.log("hi");
+        axios
+          .get("http://localhost:4040/api/favorite")
+          .then(function(response) {
+            // handle success
+            console.log(response.data);
+
+            store.Tasks.localEventInfo = response.data;
+
+            done();
+          })
+          .catch(function(error) {
+            // handle error
+            console.log(error);
+            done();
+          })
+          .finally(function() {
+            // always executed
+          });
+
+        break;
+
       default:
+        done();
     }
   }
 });
@@ -153,6 +212,7 @@ router
     "/": () => render(),
     ":view": params => {
       let view = capitalize(params.data.view);
+      console.log(view);
       render(store[view]);
     }
   })

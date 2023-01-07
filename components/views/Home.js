@@ -1,5 +1,6 @@
 import html from "html-literal";
 import profileImage from "/assets/RenardPP-modified.png";
+import carouselImage from "/assets/uploads/7e7466ecb5993c1979d4e6d6414dcca1.jpeg";
 
 export default state => html`
   <main class="indexBody">

@@ -3,7 +3,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const SerpApi = require("google-search-results-nodejs");
-const events = require("./routers/commitEvents");
+
 const axios = require("axios");
 const {
   Client: GoogleMapsClient
@@ -71,7 +71,6 @@ app.post("/add", (request, response) => {
   };
   response.json(responseBody);
 });
-app.use("/commitEvents", events);
 
 // app.use("/serpApi", serpAPI);
 // Tell the Express app to start listening

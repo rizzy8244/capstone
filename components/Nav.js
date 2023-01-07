@@ -4,8 +4,10 @@ import html from "html-literal";
 export default links => html`
   <nav>
 
-    <ul class="navBar">
+    <ul class="navBar" class="hidden--mobile nav-links">
+
     <div class="engage">ENGAGE LOGO</div>
+
       ${links
         .map(
           link =>
