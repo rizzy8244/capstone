@@ -1,6 +1,5 @@
 import html from "html-literal";
 import profileImage from "/assets/RenardPP-modified.png";
-import carouselImage from "/assets/uploads/7e7466ecb5993c1979d4e6d6414dcca1.jpeg";
 
 export default state => html`
   <main class="indexBody">
@@ -24,6 +23,11 @@ export default state => html`
       <img alt="icon"
       src=https://openweathermap.org/img/wn/${state.weather.icon}@2x.png
       width="120" height="100" />
+    </div>
+    <div class="carousel">
+      <img
+        src="http://localhost:4040/carousel/${state.imageInfo[0].filename}"
+      />
     </div>
   </main>
 `;

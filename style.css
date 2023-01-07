@@ -280,7 +280,7 @@ width:90px;
   .hidden--mobile {
     display: none !important;
   }
-
+}
 
   nav > .fa-bars {
     display: none;
@@ -292,4 +292,8 @@ width: 500px;
 height:500px;
 position:relative;
 
+  }
+
+  img{
+    max-width: 100%;
   }

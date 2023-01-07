@@ -23,9 +23,9 @@ function render(state = store.Home) {
 }
 
 function afterRender(state) {
-  document.querySelector(".fa-bars").addEventListener("click", () => {
-    document.querySelector("nav > ul").classList.toggle("hidden--mobile");
-  });
+  // document.querySelector(".fa-bars").addEventListener("click", () => {
+  //   document.querySelector("nav > ul").classList.toggle("hidden--mobile");
+  // });
 
   if (state.view === "Events") {
     document.querySelectorAll(".favoriteButton").forEach(favoriteButton => {
@@ -54,6 +54,56 @@ function afterRender(state) {
       axios.post("http://localhost:4040/api/carousel", formData);
     });
   }
+}
+function getWeather() {
+  return new Promise((resolve, reject) => {
+    let latitude = "";
+    let longitude = "";
+    navigator.geolocation.getCurrentPosition(position => {
+      latitude = position.coords.latitude;
+      longitude = position.coords.longitude;
+      axios
+        .get(
+          `http://localhost:4040/api/weather?latitude=${latitude}&longitude=${longitude}`
+        )
+        .then(function(response) {
+          // handle success
+
+          let weatherInfo = response.data;
+          console.log(weatherInfo);
+          console.log(weatherInfo.main.temp);
+          console.log(weatherInfo.weather[0].icon);
+          console.log(weatherInfo.name);
+          store.Home.weather.temperature = weatherInfo.main.temp;
+          store.Home.weather.name = weatherInfo.name;
+          store.Home.weather.icon = weatherInfo.weather[0].icon;
+          // console.log(weatherInfo.sys.country);
+          // document.querySelector("#openTemp").innerHTML =
+          //   weatherInfo.main.temp;
+          // document.querySelector("#locationName").innerHTML =
+          //   weatherInfo.name;
+        })
+        .catch(function(error) {
+          // handle error
+          console.log(error);
+        })
+        .finally(function() {
+          // always executed
+          resolve();
+        });
+    });
+  });
+}
+function getCarouselImages() {
+  return axios
+    .get("http://localhost:4040/api/carousel")
+    .then(function(response) {
+      // handle success
+      // console.log(response.data);
+
+      store.Home.imageInfo = response.data;
+      console.log(response.data);
+    });
 }
 //Event Function
 // function afterRender(state) {
@@ -109,45 +159,13 @@ router.hooks({
         : "Home"; // Add a switch case statement to handle multiple routes
     switch (view) {
       case "Home":
-        // eslint-disable-next-line no-case-declarations
-        function getWeather() {
-          let latitude = "";
-          let longitude = "";
-          navigator.geolocation.getCurrentPosition(position => {
-            latitude = position.coords.latitude;
-            longitude = position.coords.longitude;
-            axios
-              .get(
-                `http://localhost:4040/api/weather?latitude=${latitude}&longitude=${longitude}`
-              )
-              .then(function(response) {
-                // handle success
+        getWeather()
+          .then(getCarouselImages)
+          .catch(error => {
+            console.error(error);
+          })
+          .finally(done);
 
-                let weatherInfo = response.data;
-                console.log(weatherInfo);
-                console.log(weatherInfo.main.temp);
-                console.log(weatherInfo.weather[0].icon);
-                console.log(weatherInfo.name);
-                store.Home.weather.temperature = weatherInfo.main.temp;
-                store.Home.weather.name = weatherInfo.name;
-                store.Home.weather.icon = weatherInfo.weather[0].icon;
-                // console.log(weatherInfo.sys.country);
-                // document.querySelector("#openTemp").innerHTML =
-                //   weatherInfo.main.temp;
-                // document.querySelector("#locationName").innerHTML =
-                //   weatherInfo.name;
-              })
-              .catch(function(error) {
-                // handle error
-                console.log(error);
-              })
-              .finally(function() {
-                // always executed
-                done();
-              });
-          });
-        }
-        getWeather();
         break;
       case "Events":
         navigator.geolocation.getCurrentPosition(position => {
