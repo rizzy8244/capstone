@@ -143,6 +143,22 @@ app.post("/api/favorite", (request, response) => {
     });
 });
 
+app.get("/api/favorite", (request, response) => {
+  eventModel
+    .find({})
+    .then(allEvents => {
+      response.json(allEvents);
+    })
+    .catch(function(error) {
+      // handle error
+      console.log(error);
+      response.sendStatus(500);
+    })
+    .finally(function() {
+      // always executed
+    });
+});
+
 app.post("/api/carousel", upload.single("pic"), (request, response) => {
   carouselModel
     .create(request.file)

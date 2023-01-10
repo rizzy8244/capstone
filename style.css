@@ -286,11 +286,10 @@ width:90px;
 
 .carousel > img {
   display: block;
+  border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 100%;
 
 position:relative;
   }
 
-  img{
-
-    max-width: 100%;
-  }
