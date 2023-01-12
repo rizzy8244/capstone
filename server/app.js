@@ -3,14 +3,14 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const SerpApi = require("google-search-results-nodejs");
-const events = require("./routers/commitEvents");
+const multer = require("multer");
 const axios = require("axios");
 const {
   Client: GoogleMapsClient
 } = require("@googlemaps/google-maps-services-js");
 const eventModel = require("./models/cEvents");
-
-// const serpAPI = require("./routers/SerpApi");
+const carouselModel = require("./models/carouselPics");
+const path = require("path");
 
 dotenv.config();
 
@@ -18,6 +18,7 @@ const PORT = process.env.PORT || 4040; // we use || to provide a default value
 // Initialize the Express application
 const app = express();
 const googleMapsClient = new GoogleMapsClient({});
+const upload = multer({ dest: path.join(__dirname, "../assets/uploads") });
 
 mongoose.connect(process.env.MONGODB);
 const db = mongoose.connection;
@@ -56,24 +57,6 @@ app.get("/status", (request, response) => {
   response.status(200).json({ message: "Service healthy" });
 });
 
-app.get("/users/:id", (request, response) => {
-  // express adds a "params" Object to requests
-  const id = request.params.id;
-  // handle GET request for post with an id of "id"
-  response.send(JSON.stringify({ user_id: id }));
-});
-
-app.post("/add", (request, response) => {
-  const num1 = request.body.numberOne;
-  const num2 = request.body.numberTwo;
-  const responseBody = {
-    sum: num1 + num2
-  };
-  response.json(responseBody);
-});
-app.use("/commitEvents", events);
-
-// app.use("/serpApi", serpAPI);
 // Tell the Express app to start listening
 // Let the humans know I am running and listening on 4040
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
@@ -114,6 +97,7 @@ app.get("/api/events", (request, response) => {
     .catch(function(error) {
       // handle error
       console.log(error);
+      response.sendStatus(500);
     })
     .finally(function() {
       // always executed
@@ -136,6 +120,7 @@ app.get("/api/weather", (request, response) => {
     .catch(function(error) {
       // handle error
       console.log(error);
+      response.sendStatus(500);
     })
     .finally(function() {
       // always executed
@@ -151,8 +136,59 @@ app.post("/api/favorite", (request, response) => {
     .catch(function(error) {
       // handle error
       console.log(error);
+      response.sendStatus(500);
     })
     .finally(function() {
       // always executed
     });
 });
+
+app.get("/api/favorite", (request, response) => {
+  eventModel
+    .find({})
+    .then(allEvents => {
+      response.json(allEvents);
+    })
+    .catch(function(error) {
+      // handle error
+      console.log(error);
+      response.sendStatus(500);
+    })
+    .finally(function() {
+      // always executed
+    });
+});
+
+app.post("/api/carousel", upload.single("pic"), (request, response) => {
+  carouselModel
+    .create(request.file)
+    .then(newPic => {
+      response.json(newPic);
+    })
+    .catch(function(error) {
+      // handle error
+      console.log(error);
+      response.sendStatus(500);
+    })
+    .finally(function() {
+      // always executed
+    });
+});
+
+app.get("/api/carousel", (request, response) => {
+  carouselModel
+    .find({})
+    .then(allPics => {
+      response.json(allPics);
+    })
+    .catch(function(error) {
+      // handle error
+      console.log(error);
+      response.sendStatus(500);
+    })
+    .finally(function() {
+      // always executed
+    });
+});
+
+app.use("/carousel", express.static(path.join(__dirname, "../assets/uploads")));

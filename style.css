@@ -1,9 +1,10 @@
 body {
-  background-color:#9DB5B2
+  background-color:#abbebc
+
 }
 
 
-nav ul {
+@media (min-width: 924px) {nav ul {
   display: flex;
   flex-direction: row;
   border: 2px solid gray;
@@ -11,7 +12,7 @@ nav ul {
   background-color: #EEF0F2 ;
   border-radius: 10px;
   padding-right: 40px;
-}
+}}
 
 nav a:hover {
   color: #000;
@@ -249,9 +250,46 @@ width:90px;
   width: 250px;
   height: 472px;
   text-align: center;
-  background-color: #EEF0F2;
+  background-color: #BFEAF5;
   border-radius: 10px;
   align-self: center;
   justify-self: center;
 }
+
+#photoCard {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  width: 250px;
+  height: 472px;
+  text-align: center;
+  background-color: #EEF0F2;
+  border-radius: 10px;
+  align-self: center;
+  justify-self: center;
+
+
+}
+
+
+
+@media (min-width:924px){
+  .ham {
+  display: none;
+}}
+
+@media (max-width: 924px){
+  .hidden--mobile {
+    display: none !important;
+  }
+}
+
+
+
+.carousel > img {
+  display: block;
+  border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 100%;
+
+position:relative;
+  }
 

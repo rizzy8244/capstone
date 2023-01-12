@@ -11,7 +11,10 @@ const makeRow = localEvent => html`
     <td><a href="${localEvent.link}" target="_blank">Link</a></td>
     <td>
       <button
-        data-event="{thumbnail:${localEvent.thumbnail}, title:${localEvent.title}, date:${localEvent.date}, link:${localEvent.link} }"
+        data-thumbnail="${localEvent.thumbnail}"
+        data-title="${localEvent.title}"
+        data-date="${localEvent.date.when}"
+        data-link="${localEvent.link}"
         class="favoriteButton"
       >
         Favorite

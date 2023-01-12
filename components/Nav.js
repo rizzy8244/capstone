@@ -3,9 +3,12 @@ import html from "html-literal";
 
 export default links => html`
   <nav>
+    <span class="ham"><i class="fas fa-bars " ></i></span>
 
-    <ul class="navBar">
+    <ul class="navBar hidden--mobile nav-links">
+
     <div class="engage">ENGAGE LOGO</div>
+
       ${links
         .map(
           link =>

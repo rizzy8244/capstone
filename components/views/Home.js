@@ -24,5 +24,14 @@ export default state => html`
       src=https://openweathermap.org/img/wn/${state.weather.icon}@2x.png
       width="120" height="100" />
     </div>
+    <div class="carousel">
+      <img
+        src="http://localhost:4040/carousel/${state.imageInfo[0].filename}"
+        data-index="0"
+        id="carousel-image"
+      />
+      <button id="carousel-previous">&lt;</button>
+      <button id="carousel-next">&gt;</button>
+    </div>
   </main>
 `;

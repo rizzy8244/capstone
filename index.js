@@ -18,8 +18,121 @@ function render(state = store.Home) {
   ${Main(state)}
   ${Footer()}
   `;
-  // afterRender(state);
+  afterRender(state);
   router.updatePageLinks();
+}
+
+function afterRender(state) {
+  document.querySelector(".fa-bars").addEventListener("click", () => {
+    document.querySelector("nav > ul").classList.toggle("hidden--mobile");
+  });
+  if (state.view === "Home") {
+    const image = document.querySelector("#carousel-image");
+    document.querySelector("#carousel-next").addEventListener("click", () => {
+      const index = +image.dataset.index;
+      let nextIndex = index + 1;
+      if (index === state.imageInfo.length - 1) {
+        nextIndex = 0;
+      }
+      image.dataset.index = nextIndex;
+      image.src = `http://localhost:4040/carousel/${state.imageInfo[nextIndex].filename}`;
+    });
+    document
+      .querySelector("#carousel-previous")
+      .addEventListener("click", () => {
+        const index = +image.dataset.index;
+        let nextIndex = index - 1;
+        if (index === 0) {
+          nextIndex = state.imageInfo.length - 1;
+        }
+        image.dataset.index = nextIndex;
+        image.src = `http://localhost:4040/carousel/${state.imageInfo[nextIndex].filename}`;
+      });
+  }
+  if (state.view === "Events") {
+    document.querySelectorAll(".favoriteButton").forEach(favoriteButton => {
+      favoriteButton.addEventListener("click", () => {
+        axios
+          .post("http://localhost:4040/api/favorite", {
+            ...favoriteButton.dataset
+          })
+          .then(function(response) {
+            alert("Event Successfully Added ");
+          })
+          .catch(function(error) {
+            // handle error
+            console.log(error);
+          })
+          .finally(function() {
+            // always executed
+          });
+      });
+    });
+  }
+  if (state.view === "Photos") {
+    document.querySelector("#photoForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      axios
+        .post("http://localhost:4040/api/carousel", formData)
+        .then(() => {
+          alert("photo uploaded successfully");
+        })
+        .catch(() => {
+          alert("error uploading photo");
+        });
+    });
+  }
+}
+function getWeather() {
+  return new Promise((resolve, reject) => {
+    let latitude = "";
+    let longitude = "";
+    navigator.geolocation.getCurrentPosition(position => {
+      latitude = position.coords.latitude;
+      longitude = position.coords.longitude;
+      axios
+        .get(
+          `http://localhost:4040/api/weather?latitude=${latitude}&longitude=${longitude}`
+        )
+        .then(function(response) {
+          // handle success
+
+          let weatherInfo = response.data;
+          console.log(weatherInfo);
+          console.log(weatherInfo.main.temp);
+          console.log(weatherInfo.weather[0].icon);
+          console.log(weatherInfo.name);
+          store.Home.weather.temperature = weatherInfo.main.temp;
+          store.Home.weather.name = weatherInfo.name;
+          store.Home.weather.icon = weatherInfo.weather[0].icon;
+          // console.log(weatherInfo.sys.country);
+          // document.querySelector("#openTemp").innerHTML =
+          //   weatherInfo.main.temp;
+          // document.querySelector("#locationName").innerHTML =
+          //   weatherInfo.name;
+        })
+        .catch(function(error) {
+          // handle error
+          console.log(error);
+        })
+        .finally(function() {
+          // always executed
+          resolve();
+        });
+    });
+  });
+}
+function getCarouselImages() {
+  return axios
+    .get("http://localhost:4040/api/carousel")
+    .then(function(response) {
+      // handle success
+      // console.log(response.data);
+
+      store.Home.imageInfo = response.data;
+      console.log(response.data);
+    });
 }
 //Event Function
 // function afterRender(state) {
@@ -75,45 +188,13 @@ router.hooks({
         : "Home"; // Add a switch case statement to handle multiple routes
     switch (view) {
       case "Home":
-        // eslint-disable-next-line no-case-declarations
-        function getWeather() {
-          let latitude = "";
-          let longitude = "";
-          navigator.geolocation.getCurrentPosition(position => {
-            latitude = position.coords.latitude;
-            longitude = position.coords.longitude;
-            axios
-              .get(
-                `http://localhost:4040/api/weather?latitude=${latitude}&longitude=${longitude}`
-              )
-              .then(function(response) {
-                // handle success
+        getWeather()
+          .then(getCarouselImages)
+          .catch(error => {
+            console.error(error);
+          })
+          .finally(done);
 
-                let weatherInfo = response.data;
-                console.log(weatherInfo);
-                console.log(weatherInfo.main.temp);
-                console.log(weatherInfo.weather[0].icon);
-                console.log(weatherInfo.name);
-                store.Home.weather.temperature = weatherInfo.main.temp;
-                store.Home.weather.name = weatherInfo.name;
-                store.Home.weather.icon = weatherInfo.weather[0].icon;
-                // console.log(weatherInfo.sys.country);
-                // document.querySelector("#openTemp").innerHTML =
-                //   weatherInfo.main.temp;
-                // document.querySelector("#locationName").innerHTML =
-                //   weatherInfo.name;
-              })
-              .catch(function(error) {
-                // handle error
-                console.log(error);
-              })
-              .finally(function() {
-                // always executed
-                done();
-              });
-          });
-        }
-        getWeather();
         break;
       case "Events":
         navigator.geolocation.getCurrentPosition(position => {
@@ -129,6 +210,7 @@ router.hooks({
               // console.log(response.data);
 
               store.Events.localEventInfo = response.data;
+              console.log("API DATA", response.data);
               console.log(response.data[0].date);
 
               done();
@@ -143,7 +225,31 @@ router.hooks({
             });
         });
         break;
+      case "Tasks":
+        console.log("hi");
+        axios
+          .get("http://localhost:4040/api/favorite")
+          .then(function(response) {
+            // handle success
+            console.log(response.data);
+
+            store.Tasks.localEventInfo = response.data;
+
+            done();
+          })
+          .catch(function(error) {
+            // handle error
+            console.log(error);
+            done();
+          })
+          .finally(function() {
+            // always executed
+          });
+
+        break;
+
       default:
+        done();
     }
   }
 });
@@ -153,6 +259,7 @@ router
     "/": () => render(),
     ":view": params => {
       let view = capitalize(params.data.view);
+      console.log(view);
       render(store[view]);
     }
   })
